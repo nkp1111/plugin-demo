@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const ejs = require('ejs');
 
 const plugins = {
-  googleAnalytics: { installed: true, key: { measurementId: 'G-NWQN62MK52' } },
+  googleAnalytics: { installed: true, key: { measurementId: process.env.ANALYTIC_ID } },
 }
 
 port = 3000;
