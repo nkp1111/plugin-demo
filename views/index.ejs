@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plugins Demo</title>
+
+  <% if (plugins.googleAnalytics?.installed) { %>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= plugins.googleAnalytics?.key.measurementId %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+
+      gtag('config', plugins.googleAnalytics?.key.measurementId);
+    </script>
+  <% } %>
+  
+
+</head>
+<body>
+ 
+  template body content
+
+  <% for( let plugin of Object.keys(plugins) ) { %>
+    <h3><%= plugin %></h3>
+    <% if (plugins[plugin].installed === true) { %>
+      <a role="button" href="/uninstall?plugin=<%= plugin %>">
+        Uninstall
+      </a>
+    <% } else {%>
+      <a role="button" href="/install?plugin=<%= plugin %>">
+         Install
+      </a>
+    <%} %>
+    <hr/>
+  <% } %>
+
+
+  <% if (plugins.googleAnalytics?.installed && plugins.googleAnalytics?.key.measurementId) { %>
+    <button onclick="trackButtonClick()">Google analytics test</button>
+    <script>
+      function trackButtonClick() {
+        gtag('event', 'button_click', {
+          'event_category': 'Engagement',
+          'event_label': 'Button Clicked',
+        })
+      }
+    </script>
+<%}%>
+  
+</body>
+</html>
