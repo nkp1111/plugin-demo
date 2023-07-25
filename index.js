@@ -17,6 +17,11 @@ const users = {
       googleAnalytics: { installed: true, key: process.env.GOOGLE_ANALYTIC_ID2 },
     }
   },
+  user3: {
+    plugins: {
+      googleAnalytics: { installed: true, key: process.env.GOOGLE_ANALYTIC_ID3 },
+    }
+  },
 }
 
 const port = 3000;
