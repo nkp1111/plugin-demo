@@ -25,7 +25,7 @@ const users = {
 }
 
 const port = 3000;
-const serverUrl = 'http://localhost:3000'
+const serverUrl = process.env.SERVER_URL || 'http://localhost:3000';
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
