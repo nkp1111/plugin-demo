@@ -10,6 +10,8 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=<%= plugins.googleAnalytics?.key %>"></script>
     <script>
       let plugins = <%- JSON.stringify(plugins)%>;
+      let user = <%- JSON.stringify(user)%>;
+      let serverUrl = <%- JSON.stringify(serverUrl)%>;
     </script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -20,7 +22,6 @@
     </script>
   <% } %>
   
-
 </head>
 <body>
  
@@ -31,29 +32,41 @@
   <% for( let plugin of Object.keys(plugins) ) { %>
     <h3><%= plugin %></h3>
     <% if (plugins[plugin].installed === true) { %>
-      <a role="button" href="/uninstall?plugin=<%= plugin %>">
+      <button role="button"  
+        onClick="{
+          fetch(`<%= serverUrl %>/api/<%= user %>/uninstall?plugin=<%= plugin %>`, {
+            method: 'POST',
+          })
+          .then(() => window.location.reload())
+          .catch(err => console.log(err))
+        }">
         Uninstall
-      </a>
+      </button>
     <% } else {%>
-      <a role="button" href="/install?plugin=<%= plugin %>">
+      <button role="button" 
+      onClick="{
+          fetch(`<%= serverUrl %>/api/<%= user %>/install?plugin=<%= plugin %>`, {
+            method: 'POST',
+          })
+          .then(() => window.location.reload())
+          .catch(err => console.log(err))
+        }">
          Install
-      </a>
+      </button>
     <%} %>
     <hr/>
   <% } %>
 
 
   <% if (plugins.googleAnalytics?.installed && plugins.googleAnalytics?.key) { %>
-    <button onclick="trackButtonClick()">Google analytics test</button>
-    <script>
-      function trackButtonClick() {
-        gtag('event', 'button_click', {
+    <button onclick="{
+      window.dataLayer = window.dataLayer || [];
+      let  gtag = () => { dataLayer.push(arguments); }
+      gtag('event', 'button_click', {
           'event_category': 'Engagement',
           'event_label': 'Button Clicked',
-        })
-      }
-    </script>
-<%}%>
+        })}">Google analytics test</button>
+  <%}%>
   
 </body>
 </html>
