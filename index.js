@@ -35,14 +35,7 @@ app.get('/api/:user', async (req, res) => {
   const { user } = req.params;
   const pluginData = users[user].plugins;
 
-  const pluginInstallUninstall = (plugin, action = "install") => {
-    fetch(`${serverUrl}/api/${user}/${action}?plugin=${plugin}`, {
-      method: 'POST',
-    })
-      .then(() => window.location.reload())
-      .catch(err => console.log(err))
-  }
-  const data = await ejs.renderFile('./views/index.ejs', { plugins: pluginData, user, serverUrl, pluginInstallUninstall });
+  const data = await ejs.renderFile('./views/index.ejs', { plugins: pluginData, user, serverUrl });
   // res.send(data);
 
   res.json({ plugins: pluginData, data });

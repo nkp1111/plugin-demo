@@ -61,7 +61,7 @@
   <% if (plugins.googleAnalytics?.installed && plugins.googleAnalytics?.key) { %>
     <button onclick="{
       window.dataLayer = window.dataLayer || [];
-      let  gtag = () => { dataLayer.push(arguments); }
+      let  gtag = function() { dataLayer.push(arguments); }
       gtag('event', 'button_click', {
           'event_category': 'Engagement',
           'event_label': 'Button Clicked',
