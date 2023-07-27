@@ -7,20 +7,23 @@
 
   <% if (plugins.googleAnalytics?.installed) { %>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= plugins.googleAnalytics?.key %>"></script>
-    <script>
-      let plugins = <%- JSON.stringify(plugins)%>;
-      let user = <%- JSON.stringify(user)%>;
-      let serverUrl = <%- JSON.stringify(serverUrl)%>;
-    </script>
-    <script>
+    <script async defer src="https://www.googletagmanager.com/gtag/js?id=<%= plugins.googleAnalytics?.key %>"></script>
+  <% } %>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      let plugins = <%- JSON.stringify(plugins) %>;
+      let user = <%- JSON.stringify(user) %>;
+      let serverUrl = <%- JSON.stringify(serverUrl) %>;
+
+
       window.dataLayer = window.dataLayer || [];
       function gtag() { dataLayer.push(arguments); }
       gtag('js', new Date());
 
       gtag('config', '<%= plugins.googleAnalytics.key %>');
-    </script>
-  <% } %>
+    })      
+  </script>
   
 </head>
 <body>
